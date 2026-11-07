@@ -1,63 +1,50 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WorldForge — Global Strategy</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WorldForge — Global Strategy</title>
 <style>
-:root{color-scheme:dark;--bg:#0b1220;--panel:#141f31;--line:#293950;--text:#edf4ff;--muted:#9aacc4;--blue:#4da3ff;--gold:#f5c45e;--green:#4bd39b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#203956,var(--bg) 55%);color:var(--text);font:15px system-ui,Arial}header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}h1{font-size:22px;margin:0}header small,.muted{color:var(--muted)}main{max-width:1100px;margin:auto;padding:18px;display:grid;grid-template-columns:1.6fr 1fr;gap:16px}.panel{background:#121d2dcc;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 12px 35px #0003}.map{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px}.region{min-height:105px;border:1px solid #40536c;border-radius:12px;padding:10px;text-align:left;color:white;background:linear-gradient(145deg,#29445d,#1a2c40);cursor:pointer}.region.active{outline:2px solid var(--gold);border-color:var(--gold)}.region small{display:block;color:#c5d5e8;margin-top:7px}.region .owner{font-size:11px;color:#9fb4cd}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{background:#0d1726;border:1px solid var(--line);padding:10px;border-radius:10px}.stat b{display:block;font-size:20px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}button{border:1px solid #3c5875;background:#1b3450;color:var(--text);padding:10px 12px;border-radius:10px;font-weight:650;cursor:pointer}button:hover{filter:brightness(1.2)}button:disabled{opacity:.35;cursor:not-allowed}.primary{background:#185e91;border-color:#398fd0}.log{height:190px;overflow:auto;background:#0b1421;border-radius:10px;padding:10px;color:#bfd0e5;font-size:13px}.topline{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.pill{padding:5px 9px;border-radius:99px;background:#1c3047;color:#b9d8f5;font-size:12px}.wide{width:100%;margin-top:10px}.hint{font-size:13px;color:var(--muted);line-height:1.5}.footer{max-width:1100px;margin:0 auto;padding:0 18px 25px;color:var(--muted);font-size:12px}@media(max-width:760px){main{grid-template-columns:1fr;padding:12px}.map{grid-template-columns:repeat(2,1fr)}header{padding:14px}}
-</style>
-</head>
-<body>
-<header><div><h1>🌍 WorldForge</h1><small>Build alliances. Manage resources. Shape the world.</small></div><span class="pill">Turn-based strategy · Prototype</span></header>
+:root{color-scheme:dark;--bg:#08111e;--panel:#121f32;--line:#2a405a;--text:#edf4ff;--muted:#9eb0c8;--gold:#f5c45e}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#203956,var(--bg) 60%);color:var(--text);font:15px system-ui,Arial}header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}h1{margin:0;font-size:23px}small,.muted{color:var(--muted)}main{max-width:1200px;margin:auto;padding:16px;display:grid;grid-template-columns:1.5fr 1fr;gap:15px}.panel{background:#121d2ddd;border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:0 12px 35px #0003}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.pill{background:#1d334c;color:#c6def7;border-radius:30px;padding:6px 10px;font-size:12px}.mapwrap{margin-top:12px;background:linear-gradient(160deg,#102d3c,#0b1b2c);border:1px solid #29475d;border-radius:14px;padding:8px;overflow:hidden}.mapwrap svg{width:100%;height:auto;display:block}.land{fill:#23445a;stroke:#7ea0b6;stroke-width:2}.route{stroke:#46667b;stroke-width:2;stroke-dasharray:5 6;fill:none}.node{cursor:pointer;stroke:#d9e7f5;stroke-width:2}.node.P1{fill:#277bc1}.node.P2{fill:#bd694d}.node.Neutral{fill:#62788a}.node.selected{stroke:#ffd36c;stroke-width:5}.maplabel{fill:#edf4ff;font-size:12px;font-weight:700;pointer-events:none}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:8px}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.stat{background:#0b1727;border:1px solid var(--line);padding:10px;border-radius:10px}.stat b{display:block;font-size:21px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}button{border:1px solid #3c5875;background:#1b3450;color:var(--text);padding:10px;border-radius:10px;font-weight:650;cursor:pointer}button:hover{filter:brightness(1.2)}button:disabled{opacity:.35;cursor:not-allowed}.primary{background:#185e91;border-color:#398fd0}.danger{background:#582d39;border-color:#a95767}.wide{width:100%;margin-top:9px}.log{height:160px;overflow:auto;background:#091522;border-radius:10px;padding:10px;color:#c3d3e6;font-size:13px}.hint{font-size:13px;color:var(--muted);line-height:1.5}.footer{max-width:1200px;margin:auto;padding:0 16px 22px;color:var(--muted);font-size:12px}@media(max-width:800px){main{grid-template-columns:1fr;padding:10px}.mapwrap svg{min-height:240px}.stats{grid-template-columns:repeat(3,1fr)}} 
+</style></head><body>
+<header><div><h1>🌍 WorldForge</h1><small>Expand your nation. Make deals. Compete for world influence.</small></div><span class="pill">Dark strategy · Local 2-player prototype</span></header>
 <main>
-<section class="panel">
- <div class="topline"><h2 style="margin:0">World map</h2><span class="pill" id="turnLabel">Player 1's turn</span></div>
- <p class="hint">Select one of the fictional regions. Capture neutral regions by spending influence. This prototype uses abstract strategy abilities, not real-world attack simulations.</p>
- <div class="map" id="map"></div>
- <div class="stats">
-  <div class="stat"><span class="muted">Credits</span><b id="credits">10</b></div>
-  <div class="stat"><span class="muted">Influence</span><b id="influence">5</b></div>
-  <div class="stat"><span class="muted">Regions</span><b id="count">2</b></div>
- </div>
+<section class="panel"><div class="top"><h2 style="margin:0">World map</h2><span class="pill" id="turnLabel">Player 1's turn</span></div><p class="hint">A fictional world map with 12 nations. Tap a map marker to select a nation. Blue = Player 1, red = Player 2, grey = neutral.</p>
+<div class="mapwrap"><svg viewBox="0 0 680 430" role="img" aria-label="Fictional world map with twelve selectable nations">
+<path class="land" d="M45 95 L95 48 180 38 232 65 285 47 350 74 420 52 490 76 560 55 635 105 620 175 650 220 600 285 555 330 480 345 430 390 350 365 285 395 225 355 160 370 110 315 55 275 72 205 35 155Z"/>
+<g class="route"><path d="M115 125L225 110L330 115L450 110L565 140M115 125L155 245L260 285L380 250L500 250L565 140M225 110L260 285M330 115L380 250M450 110L500 250M155 245L260 285L380 250L450 340"/></g>
+<g id="mapNodes"></g></svg><div class="legend"><span><i class="dot" style="background:#277bc1"></i>Player 1</span><span><i class="dot" style="background:#bd694d"></i>Player 2</span><span><i class="dot" style="background:#62788a"></i>Neutral</span><span>✦ Selected nation</span></div></div>
+<div class="stats"><div class="stat"><span class="muted">Credits</span><b id="credits">12</b></div><div class="stat"><span class="muted">Influence</span><b id="influence">7</b></div><div class="stat"><span class="muted">Nations</span><b id="count">3</b></div></div>
 </section>
-<aside class="panel">
- <h2 style="margin-top:0">Command center</h2>
- <div class="topline"><span class="muted">Selected region</span><b id="selected">Northland</b></div>
- <button class="primary wide" id="claim">Claim neutral region · 4 influence</button>
- <h3>Special abilities</h3>
- <div class="actions">
-  <button id="shield">🛡️ Shield Network <small>(3 uses)</small></button>
-  <button id="supply">📦 Supply Drop <small>(5 uses)</small></button>
-  <button id="blackout">🌑 Global Blackout <small>(3 uses)</small></button>
-  <button id="summit">🕊️ Peace Summit <small>(5 uses)</small></button>
- </div>
- <p class="hint" id="abilityInfo">Abilities are limited per match. Select a region before using one.</p>
- <button class="primary wide" id="end">End turn</button>
- <h3>World events</h3><div class="log" id="log" aria-live="polite"></div>
- <button class="wide" id="reset">Restart match</button>
-</aside>
-</main>
-<div class="footer">WorldForge early prototype. Multiplayer rooms and online syncing are not connected yet; this version is playable locally on one device.</div>
+<aside class="panel"><h2 style="margin:0 0 12px">Command center</h2><div class="top"><span class="muted">Selected nation</span><b id="selected">Northland</b></div><p class="hint" id="nationInfo">Culture: Aurora tradition · Owner: Player 1</p>
+<button class="primary wide" id="claim">Claim neutral nation · 4 influence</button>
+<button class="danger wide" id="attack">⚔️ Challenge rival nation · 3 influence</button>
+<h3>Limited special actions</h3><div class="actions">
+<button id="shield">🛡️ Shield network <small>(3)</small></button><button id="supply">📦 Supply boost <small>(5)</small></button>
+<button id="skystrike">☄️ Skystrike card <small>(2)</small></button><button id="doomsday">☢️ Doomsday card <small>(1)</small></button>
+</div><p class="hint">Special actions are fictional game cards. They change game stats or ownership only; no real-world targeting or weapon instructions.</p>
+<button class="primary wide" id="end">End turn</button><h3>World events</h3><div class="log" id="log" aria-live="polite"></div><button class="wide" id="reset">Restart match</button></aside>
+</main><div class="footer">WorldForge prototype · Local pass-and-play on one device. Online rooms are not connected yet. Fictional cultures are background lore and are never attack targets.</div>
 <script>
-const initial=[['Northland','P1'],['Westreach','Neutral'],['Eastmere','Neutral'],['Frost Isles','P2'],['Sun Coast','Neutral'],['High Plains','Neutral'],['Greenbelt','P1'],['South Cape','P2']];
-let regions,turn,credits,influence,selected,uses,shielded;
+const seed=[
+['Northland','P1','Aurora',115,125],['Westreach','Neutral','Cedar',225,110],['Eastmere','Neutral','River',330,115],['Frost Isles','P2','Glacier',450,110],
+['Sun Coast','Neutral','Sol',565,140],['High Plains','Neutral','Steppe',155,245],['Greenbelt','P1','Jade',260,285],['South Cape','P2','Coral',380,250],
+['Amberia','Neutral','Amber',500,250],['Moonvale','Neutral','Lunar',95,315],['Stormhold','P2','Tempest',450,340],['Dawnreach','Neutral','Dawn',600,300]
+];
+let regions,turn,credits,influence,selected,uses,shields;
 const $=id=>document.getElementById(id);
-function reset(){regions=initial.map(([name,owner])=>({name,owner}));turn=1;credits=[0,10,10];influence=[0,5,5];selected=0;uses={shield:3,supply:5,blackout:3,summit:5};shielded={};$('log').innerHTML='';say('The match has begun. Player 1 moves first.');render()}
+function reset(){regions=seed.map(([name,owner,culture,x,y])=>({name,owner,culture,x,y}));turn=1;credits=[0,12,12];influence=[0,7,7];selected=0;uses={shield:3,supply:5,skystrike:2,doomsday:1};shields={};$('log').innerHTML='';say('New match started. Player 1 moves first.');render()}
 function say(s){$('log').innerHTML='<div>• '+s+'</div>'+$('log').innerHTML}
-function render(){ $('turnLabel').textContent='Player '+turn+"'s turn";$('credits').textContent=credits[turn];$('influence').textContent=influence[turn];$('count').textContent=regions.filter(r=>r.owner==='P'+turn).length;$('selected').textContent=regions[selected].name;
-$('map').innerHTML=regions.map((r,i)=>'<button class="region '+(i===selected?'active':'')+'" data-i="'+i+'"><b>'+r.name+'</b><small class="owner">'+(r.owner==='Neutral'?'Unclaimed':r.owner==='P1'?'Player 1':'Player 2')+'</small><small>'+(shielded[i]?'🛡️ Protected':'🏙️ Region')+'</small></button>').join('');
-document.querySelectorAll('.region').forEach(b=>b.onclick=()=>{selected=+b.dataset.i;render()});
+function render(){ $('turnLabel').textContent='Player '+turn+"'s turn";$('credits').textContent=credits[turn];$('influence').textContent=influence[turn];$('count').textContent=regions.filter(r=>r.owner==='P'+turn).length;$('selected').textContent=regions[selected].name;$('nationInfo').textContent='Culture: '+regions[selected].culture+' tradition · Owner: '+(regions[selected].owner==='Neutral'?'Neutral': 'Player '+regions[selected].owner.slice(1))+(shields[selected]?' · Shielded':'');
+$('mapNodes').innerHTML=regions.map((r,i)=>'<g data-i="'+i+'" style="cursor:pointer"><circle class="node '+r.owner+' '+(i===selected?'selected':'')+'" cx="'+r.x+'" cy="'+r.y+'" r="13"></circle><text class="maplabel" x="'+r.x+'" y="'+(r.y+29)+'" text-anchor="middle">'+r.name+'</text></g>').join('');
+document.querySelectorAll('#mapNodes g').forEach(g=>g.onclick=()=>{selected=+g.dataset.i;render()});
 $('claim').disabled=regions[selected].owner!=='Neutral'||influence[turn]<4;
+$('attack').disabled=regions[selected].owner===('P'+turn)||regions[selected].owner==='Neutral'||influence[turn]<3;
 for(const a of Object.keys(uses))$(a).disabled=uses[a]<=0;
 }
-$('claim').onclick=()=>{if(regions[selected].owner!=='Neutral'||influence[turn]<4)return;regions[selected].owner='P'+turn;influence[turn]-=4;say('Player '+turn+' established control in '+regions[selected].name+'.');render()};
-function ability(key,cost,fn){if(uses[key]<=0)return;uses[key]--;fn();render()}
-$('shield').onclick=()=>ability('shield',0,()=>{shielded[selected]=true;say('Shield Network protected '+regions[selected].name+' for this match.')});
-$('supply').onclick=()=>ability('supply',0,()=>{credits[turn]+=4;influence[turn]+=2;say('Supply Drop delivered resources to Player '+turn+'.')});
-$('blackout').onclick=()=>ability('blackout',0,()=>{credits[turn]+=2;say('Global Blackout disrupted trade for one turn. Player '+turn+' gained 2 credits from emergency planning.')});
-$('summit').onclick=()=>ability('summit',0,()=>{influence[turn]+=3;say('Peace Summit improved Player '+turn+"'s influence by 3.")});
-$('end').onclick=()=>{turn=turn===1?2:1;credits[turn]+=3;influence[turn]+=1;say('Player '+turn+' begins a turn and receives 3 credits and 1 influence.');render()};
+$('claim').onclick=()=>{if(regions[selected].owner!=='Neutral'||influence[turn]<4)return;regions[selected].owner='P'+turn;influence[turn]-=4;say('Player '+turn+' claimed '+regions[selected].name+'.');render()};
+$('attack').onclick=()=>{let r=regions[selected],enemy=turn===1?'P2':'P1';if(r.owner!==enemy||influence[turn]<3)return;influence[turn]-=3;if(shields[selected]){delete shields[selected];say(r.name+' blocked the challenge with its shield.');}else{r.owner='Neutral';influence[turn===1?2:1]=Math.max(0,influence[turn===1?2:1]-1);say('Player '+turn+' won a strategy challenge at '+r.name+'. The nation is now neutral.');}render()};
+function use(key,fn){if(uses[key]<=0)return;uses[key]--;fn();render()}
+$('shield').onclick=()=>use('shield',()=>{shields[selected]=true;say(regions[selected].name+' is protected by a shield.')});
+$('supply').onclick=()=>use('supply',()=>{credits[turn]+=5;influence[turn]+=2;say('Supply boost: Player '+turn+' gained 5 credits and 2 influence.')});
+$('skystrike').onclick=()=>use('skystrike',()=>{let enemy=turn===1?'P2':'P1',target=regions[selected];if(target.owner!==enemy){uses.skystrike++;say('Select a rival-owned nation first. No card was spent.');return;}if(shields[selected]){delete shields[selected];say('Skystrike card was blocked by '+target.name+"'s shield.");}else{target.owner='Neutral';influence[turn===1?2:1]=Math.max(0,influence[turn===1?2:1]-2);say('Skystrike card changed '+target.name+' to neutral and reduced rival influence by 2.');}});
+$('doomsday').onclick=()=>use('doomsday',()=>{let enemy=turn===1?'P2':'P1';influence[turn===1?2:1]=Math.max(0,influence[turn===1?2:1]-4);credits[turn===1?2:1]=Math.max(0,credits[turn===1?2:1]-4);say('Doomsday card triggered a fictional global event: rival loses 4 influence and 4 credits. No map regions or real-world places are depicted as targets.');});
+$('end').onclick=()=>{turn=turn===1?2:1;credits[turn]+=3;influence[turn]+=2;say('Player '+turn+' begins a turn and gains 3 credits and 2 influence.');render()};
 $('reset').onclick=reset;reset();
-</script>
-</body></html>
+</script></body></html>
