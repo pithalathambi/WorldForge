@@ -32,12 +32,12 @@ function makeMap(){
 function say(s){$('log').innerHTML='<div>• Day '+day+' · '+s+'</div>'+$('log').innerHTML}
 function notifyEvent(title,message){const toast=$('eventToast');toast.textContent='🔔 '+title+' — '+message;document.title='🔔 Day '+day+' · WorldForge';if('Notification'in window&&Notification.permission==='granted'){try{new Notification('WorldForge · Day '+day,{body:title+' — '+message,tag:'worldforge-event'})}catch(e){}}}
 const worldEvents=[
- ['Harvest Festival','Both players gain 3 credits.',()=>{credits[1]+=3;credits[2]+=3}],
- ['Trade Winds','Both players gain 2 credits and 1 influence.',()=>{for(let p=1;p<=2;p++){credits[p]+=2;influence[p]+=1}}],
- ['Scholars’ Congress','Both players gain 2 influence.',()=>{influence[1]+=2;influence[2]+=2}],
+ ['Harvest Festival','All nations gain 3 credits.',()=>{for(let p=1;p<=playerCount;p++)credits[p]+=3}],
+ ['Trade Winds','All nations gain 2 credits and 1 influence.',()=>{for(let p=1;p<=playerCount;p++){credits[p]+=2;influence[p]+=1}}],
+ ['Scholars’ Congress','All nations gain 2 influence.',()=>{for(let p=1;p<=playerCount;p++)influence[p]+=2}],
  ['Border Conference','The cost of claiming a neutral province is reduced to 3 influence for this day.',()=>{}],
- ['Market Reopening','The next income collection grants both players 2 bonus credits.',()=>{credits[1]+=2;credits[2]+=2}],
- ['Cultural Exchange','Both nations gain 1 influence and 1 credit.',()=>{for(let p=1;p<=2;p++){credits[p]+=1;influence[p]+=1}}]
+ ['Market Reopening','All nations gain 2 credits.',()=>{for(let p=1;p<=playerCount;p++)credits[p]+=2}],
+ ['Cultural Exchange','All nations gain 1 influence and 1 credit.',()=>{for(let p=1;p<=playerCount;p++){credits[p]+=1;influence[p]+=1}}]
 ];
 function triggerWorldEvent(){const e=worldEvents[Math.floor(Math.random()*worldEvents.length)];e[2]();say('WORLD EVENT: '+e[0]+'. '+e[1]);notifyEvent('World event: '+e[0],e[1]);render();}
 function checkWinner(){let p1=regions.filter(r=>r.owner==='P1').length,p2=regions.filter(r=>r.owner==='P2').length,winner=p1>=22?1:p2>=22?2:p1===0?2:p2===0?1:0;if(winner){$('resultTitle').textContent='PLAYER '+winner+' — WINNER';$('resultText').innerHTML='<span class="winner">Victory!</span> Player '+winner+' controls '+(winner===1?p1:p2)+' of 30 provinces.';$('resultLoser').textContent='PLAYER '+(winner===1?2:1)+' — DEFEAT';$('result').classList.add('show');return true}return false}
@@ -54,7 +54,7 @@ $('attack').onclick=()=>{let r=regions[selected],enemy=turn===1?'P2':'P1';if(r.o
 $('shield').onclick=()=>{if(uses[turn].shield<=0||regions[selected].owner!=='P'+turn||shields[selected])return;uses[turn].shield--;shields[selected]=true;say(regions[selected].name+' is protected by a shield.');render()};
 $('supply').onclick=()=>{if(uses[turn].supply<=0)return;uses[turn].supply--;credits[turn]+=5;influence[turn]+=2;say('Supply boost: Player '+turn+' gained 5 credits and 2 influence.');render()};
 $('skystrike').onclick=()=>{const enemy=turn===1?'P2':'P1',target=regions[selected];if(uses[turn].skystrike<=0||target.owner!==enemy)return;uses[turn].skystrike--;if(shields[selected]){delete shields[selected];say('Skystrike was blocked by '+target.name+"'s shield.")}else{target.owner='Neutral';influence[turn===1?2:1]=Math.max(0,influence[turn===1?2:1]-2);say('Skystrike changed '+target.name+' to independent.')}render();checkWinner()};
-$('doomsday').onclick=()=>{if(uses[turn].doomsday<=0)return;uses[turn].doomsday--;const enemy=turn===1?2:1;influence[enemy]=Math.max(0,influence[enemy]-4);credits[enemy]=Math.max(0,credits[enemy]-4);say('World event: Player '+enemy+' loses 4 influence and 4 credits.');render()};
+$('doomsday').onclick=()=>{if(uses[turn].doomsday<=0)return;uses[turn].doomsday--;const rivals=Array.from({length:playerCount},(_,i)=>i+1).filter(p=>p!==turn&&!wfAllied(turn,p));if(!rivals.length)return;const enemy=rivals[Math.floor(Math.random()*rivals.length)];influence[enemy]=Math.max(0,influence[enemy]-4);credits[enemy]=Math.max(0,credits[enemy]-4);say('World event: Player '+enemy+' loses 4 influence and 4 credits.');render()};
 function propose(type){if(treatyOffer||treaties[type])return;treatyOffer={type,from:turn};say('Player '+turn+' proposed a '+type+' to Player '+(turn===1?2:1)+'.');render()}
 $('tradePact').onclick=()=>propose('trade');$('peacePact').onclick=()=>propose('peace');$('alliance').onclick=()=>propose('alliance');
 $('acceptTreaty').onclick=()=>{if(!treatyOffer||treatyOffer.from===turn)return;let t=treatyOffer.type;treaties[t]=1;treatyOffer=null;say('Player '+turn+' accepted the '+t+' agreement.');render()};
