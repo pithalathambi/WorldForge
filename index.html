@@ -22,7 +22,7 @@ const regions=[];let turn=1,credits=[0,12,12],influence=[0,7,7],selected=0,uses=
 function makeMap(){
  const left=[405,305,205,125,95,155,285],right=[555,690,785,835,805,720,590],ys=[55,245,445,650,860,1070,1285],grid=[];
  for(let r=0;r<7;r++){grid[r]=[];for(let c=0;c<6;c++){let t=c/5,x=left[r]+(right[r]-left[r])*t,y=ys[r];let seed=(r*37+c*19+11)%29-14;if(c>0&&c<5)x+=seed*5;if(r>0&&r<6)y+=((r*13+c*11)%17-8)*5;if(c===0||c===5)x+=((r*7+c*3)%13-6)*3;grid[r][c]={x,y};}}
- const mid=(a,b,tag)=>{let h=0;for(let i=0;i<tag.length;i++)h=(h*31+tag.charCodeAt(i))|0;let off=(Math.abs(h)%43)-21;let dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1;return {x:(a.x+b.x)/2-dy/len*off,y:(a.y+b.y)/2+dx/len*off};};
+ const mid=(a,b,tag)=>{if(a.x>b.x||(a.x===b.x&&a.y>b.y)){const t=a;a=b;b=t;}let h=0;for(let i=0;i<tag.length;i++)h=(h*31+tag.charCodeAt(i))|0;let off=(Math.abs(h)%43)-21;let dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)||1;return {x:(a.x+b.x)/2-dy/len*off,y:(a.y+b.y)/2+dx/len*off};};
  const edge=(a,b,tag)=>[a,mid(a,b,tag),b];const outer=[];
  for(let c=0;c<5;c++)outer.push(...edge(grid[0][c],grid[0][c+1],'T'+c).slice(0,2));for(let r=0;r<6;r++)outer.push(...edge(grid[r][5],grid[r+1][5],'R'+r).slice(0,2));for(let c=5;c>0;c--)outer.push(...edge(grid[6][c],grid[6][c-1],'B'+c).slice(0,2));for(let r=6;r>0;r--)outer.push(...edge(grid[r][0],grid[r-1][0],'L'+r).slice(0,2));
  const outline='M '+outer.map(p=>p.x+','+p.y).join(' L ')+' Z';$('landOutline').setAttribute('d',outline);$('landShadow').setAttribute('d',outline.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g,(m,x,y)=>(+x+9)+','+(+y+12)));
