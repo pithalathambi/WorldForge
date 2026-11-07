@@ -132,6 +132,7 @@ wfRing=function(r){
 };
 const wfResetDraftBase=reset;
 reset=async function(){
+ playerCount=+$('playerCount').value||2;
  countryDraft=true;countryPicks={};pickBtn.style.display='';
  await wfResetDraftBase();
  regions.forEach(r=>r.owner='Neutral');
